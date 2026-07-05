@@ -2,12 +2,17 @@ const express = require('express');
 const env=require("dotenv");
 const bodyParser=require('body-parser')
 const mongoose=require("mongoose")
+
+const MovieRoutes=require('./routes/movie.routes');
 env.config();
+
 
 const app=express();
 
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(bodyParser.json());
+
+MovieRoutes(app);
 
 const PORT=process.env.PORT;
 
