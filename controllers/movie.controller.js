@@ -1,4 +1,7 @@
 const Movie=require('../models/movie.model')
+const movieService=require('../services/movies.service')
+const {successResponseBody,errorResponseBody}=require('../utils/responsebody')
+const {STATUS}=require('../utils/constants');
 
 /** 
  * @param {*} req {name,des ...}
@@ -6,24 +9,60 @@ const Movie=require('../models/movie.model')
  * @returns movie created
  */
 
-const createMovie=(req,res)=>{
+
+const createMovie=async(req,res)=>{
      try{
-        const movie=await Movie.create(req.body);
-        return res.status(201).json({
-            success:true,
-            error:{},
-            data:movie,
-            message:'Successfully created a new movie'
-        })
-     }catch(err){
+        const movie=await movieService.createMovie(req.body);
+        successResponseBody.data=movie;
+        successResponseBody.message = "Successfully created the movie";
+        return res.status(STATUS.CREATED).json(successResponseBody)
+     }catch(error){
+           if(error.err){
+              errorResponseBody.err=error.err;
+              return res.status(error.code).json(errorResponseBody);
+           }
+           errorResponseBody.err = error;
            console.log(err);
-           return res.status(500).json({
-            success:true,
-            error:err,
-            data:{},
-            message:'Something is wrong'
-           })
+           return res.status(STATUS.INTERNAL_SERVER_ERROR).json(errorResponseBody)
      }
 }
 
-module.exports=createMovie;
+const deleteMovie=async(req,res)=>{
+    try{
+        const movieId=req.params.id;
+        const movie=await movieService.deleteMovie(movieId);
+        successResponseBody.data=movie;
+        successResponseBody.message = "Successfully deleted the movie";
+        return res.status(STATUS.OK).json(successResponseBody)
+    }
+    catch(error){
+        console.log(error);
+        if(error.err){
+            errorResponseBody.err=error.err;
+            return res.status(error.code).json(errorResponseBody);
+        }
+        errorResponseBody.err = error;
+        return res.status(STATUS.INTERNAL_SERVER_ERROR).json(errorResponseBody)
+    }
+}
+
+const getMovie=async(req,res)=>{
+    try{
+        const response=await movieService.getMovieById(req.params.id);
+        if(response.err){
+            successresponseBody.err=response.err;
+            return res.status(response.code).json(successresponseBody);
+        }
+        successresponseBody.data=response;
+        return res.status(STATUS.OK).json(successresponseBody)
+    }
+    catch(error){
+        console.log(error);
+        errorResponseBody.err = error;
+        return res.status(STATUS.INTERNAL_SERVER_ERROR).json(errorResponseBody)
+    }
+}
+
+
+
+module.exports={createMovie,deleteMovie,getMovie};

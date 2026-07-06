@@ -1,0 +1,47 @@
+const Movie=require('../models/movie.model');
+const {STATUS}=require('../utils/constants')
+
+const getMovieById=async(id)=>{
+    const movie=await Movie.findById(id);
+    if(!movie){
+            throw{
+            err:"No movie found for corressponding movie",
+            code:404}
+    }
+    return movie;
+}
+
+const createMovie=async(data)=>{
+    try{
+        const movie=Movie.create(data);
+        return movie;
+    }catch(error){
+       if(error.name=='ValidationError'){
+        let err={};
+        Object.keys(error.errors).forEach((key)=>{
+            err[key]=error.errors[key].message
+        })
+        throw{err:err,code:STATUS.UNPROCESSABLE_ENTITY};
+       }else{
+        throw error;
+       }
+    }
+}
+
+const deleteMovie=async(id)=>{
+    try{
+    const deletedMovie=await Movie.findByIdAndDelete(id)
+    if(!deletedMovie){
+        throw{
+            err:"No movie found for corressponding movie",
+            code:404}
+        }
+    return deletedMovie;
+}catch(error){
+    throw error;
+}
+}
+
+
+
+module.exports={getMovieById,createMovie,deleteMovie}
