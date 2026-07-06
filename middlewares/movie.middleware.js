@@ -54,5 +54,4 @@ const validateMovieCreateRequest=async(req,res,next)=>{
 
 module.exports={
 validateMovieCreateRequest
-
 }

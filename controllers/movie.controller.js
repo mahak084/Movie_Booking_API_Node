@@ -77,6 +77,22 @@ const updateMovie=async(req,res)=>{
     }
 }
 
+const getMovies=async(req,res)=>{
+    try{
+        const response=await movieService.fetchMovies(req.query);
+        successResponseBody.data=response;
+        return res.status(STATUS.OK).json(successResponseBody);
+    }
+    catch(error){
+        if(error.err) {
+            errorResponseBody.err = error.err;
+            return res.status(error.code).json(errorResponseBody);
+        }
+        errorResponseBody.err = error;
+        return res.status(STATUS.INTERNAL_SERVER_ERROR).json(errorResponseBody);    
+    }
+}
 
 
-module.exports={createMovie,deleteMovie,getMovie,updateMovie};
+
+module.exports={createMovie,deleteMovie,getMovie,updateMovie,getMovies};
