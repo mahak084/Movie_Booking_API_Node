@@ -42,27 +42,41 @@ const deleteMovie=async(req,res)=>{
             return res.status(error.code).json(errorResponseBody);
         }
         errorResponseBody.err = error;
-        return res.status(STATUS.INTERNAL_SERVER_ERROR).json(errorResponseBody)
+        return res.status(STATUS.INTERNAL_SERVER_ERROR).json(errorResponseBody);
     }
 }
 
 const getMovie=async(req,res)=>{
     try{
         const response=await movieService.getMovieById(req.params.id);
-        if(response.err){
-            successresponseBody.err=response.err;
-            return res.status(response.code).json(successresponseBody);
-        }
         successresponseBody.data=response;
-        return res.status(STATUS.OK).json(successresponseBody)
+        return res.status(STATUS.OK).json(successresponseBody);
     }
     catch(error){
         console.log(error);
         errorResponseBody.err = error;
-        return res.status(STATUS.INTERNAL_SERVER_ERROR).json(errorResponseBody)
+        return res.status(STATUS.INTERNAL_SERVER_ERROR).json(errorResponseBody);
+    }
+}
+
+const updateMovie=async(req,res)=>{
+    try{
+        const response=await movieService.updateMovie(req.params.id,req.body);
+        
+        successResponseBody.data=movie;
+        return res.status(STATUS.OK).json(successResponseBody)
+    }
+    catch(error){
+        if(error.err){
+            errorResponseBody.err=response.err;
+            errorResponseBody.message="Updates we are trying to apply doesn't validate the schema";
+            return res.status(response.code).json(errorResponseBody);
+        }
+        errorResponseBody.err=err;
+        return res.status(STATUS.INTERNAL_SERVER_ERROR).json(errorResponseBody);
     }
 }
 
 
 
-module.exports={createMovie,deleteMovie,getMovie};
+module.exports={createMovie,deleteMovie,getMovie,updateMovie};

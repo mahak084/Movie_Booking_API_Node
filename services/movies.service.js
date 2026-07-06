@@ -19,7 +19,7 @@ const createMovie=async(data)=>{
        if(error.name=='ValidationError'){
         let err={};
         Object.keys(error.errors).forEach((key)=>{
-            err[key]=error.errors[key].message
+            err[key]=error.errors[key].message;
         })
         throw{err:err,code:STATUS.UNPROCESSABLE_ENTITY};
        }else{
@@ -40,6 +40,23 @@ const deleteMovie=async(id)=>{
 }catch(error){
     throw error;
 }
+}
+
+const updateMovie=async(id,data)=>{
+    try{const movie=await Movie.findByIdAndUpdate(id,data,{new:true,runValidators:true});
+    return movie;
+}
+    catch(error){
+        if(error.name=='ValidatorError'){
+            let err={};
+            Object.keys(errors.error).forEach((key)=>{
+                err[key]=error.errors[key].message;
+            })
+            return {err:err,code:STATUS.UNPROCESSABLE_ENTITY};
+        }else{
+        throw error;
+    }
+    }
 }
 
 
