@@ -52,9 +52,14 @@ const getTheatre=async(req,res)=>{
 }
 
 const getTheatres=async(req,res)=>{
-    try{}
-    catch(error){
-        
+    try{
+        const response=await theatreService.getAllTheatres(req.query);
+        successResponseBody.data = response;
+        successResponseBody.message = "Successfully fetched all the theatres";
+        return res.status(STATUS.OK).json(successResponseBody);
+    } catch (error) {
+        errorResponseBody.err = error;
+        return res.status(STATUS.INTERNAL_SERVER_ERROR).json(errorResponseBody);
     }
 }
 
@@ -74,4 +79,25 @@ const update = async (req, res) => {
     }
 }
 
- module.exports={create,destroy,update,getTheatre,getAllTheatres};
+const updateMovies=async(req,res)=>{
+    try{
+        const response=await theatreService.updateMoviesInTheatres(
+            req.params.id,
+            req,bosy.moviesIds,
+            req.body.insert
+        )
+        successResponseBody.data = response;
+        successResponseBody.message = "Successfully updated movies in the theatre";
+        return res.status(STATUS.OK).json(successResponseBody);
+    }
+    catch(error){
+        if(error.err) {
+            errorResponseBody.err = error.err;
+            return res.status(error.code).json(errorResponseBody);
+        }
+        errorResponseBody.err = error;
+        return res.status(STATUS.INTERNAL_SERVER_ERROR).json(errorResponseBody);
+    }
+}
+
+ module.exports={create,destroy,update,getTheatre,getTheatres,updateMovies};

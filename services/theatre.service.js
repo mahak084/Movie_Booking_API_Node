@@ -48,10 +48,24 @@ const getTheatre=async(id)=>{
 
 const getAllTheatres=async(data)=>{
     try{
-
+        let query={};
+        if(data && data.pin){
+            query.pin=data.pin;
+        }
+        if(data && data.name){
+            query.name=data.name;
+        }
+        if(data && data.city){
+            query.city=data.city;
+        }
+        if(data && data.movieId){
+            query.movies={$all:data.movieId};
+        }
+        const response=await Theatre.find(query);
+        return response;
     }
     catch(err){
-
+         throw error
     }
 
 }
@@ -81,7 +95,38 @@ const updateTheatre = async (id, data) => {
     }
 }
 
+const updateMoviesInTheatres=async(theatreId, movieIds ,insert)=>{
+    try{
+          const theatre=await theatre.findById(theatreId);
+            if(!theatre){
+                return {
+                    err:'No such theatre found for provided id',
+                    code:404
+                }
+            }
+        if(insert){
+            //we need to add movies
+            moviesIds.forEach(movieId=>{
+                theatre.movies.push(movieId);
+            })
+            
+        }else{
+            //remove movie
+            let savedMovieIds=theatre.movies;
+            movieIds.forEach(movieId=>{
+                savedMovieIds=savedMovieIds.filter(smi=>smi==movieId);
+            });
+            theatre.movies=savedMovieIds;
+
+        }
+        await theatre.save();
+        return theatre.populate('movies');
+    }
+    catch(error){
+        throw error
+    }
+}
 
 module.exports={
-    createTheatre,deleteTheatre,getTheatre,updateTheatre,getAllTheatres
+    createTheatre,deleteTheatre,getTheatre,updateTheatre,getAllTheatres,updateMoviesInTheatres
 }

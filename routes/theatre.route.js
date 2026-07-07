@@ -1,5 +1,5 @@
 const theatreController=require('../controllers/theatre.controller');
-const { validateTheatreCreateRequest } = require('../middlewares/theatre.middleware');
+const { validateTheatreCreateRequest ,validateUpdateMoviesRequest} = require('../middlewares/theatre.middleware');
 
 const routes=(app)=>{
     app.post('/mba/api/v1/theatres',
@@ -22,6 +22,11 @@ const routes=(app)=>{
     app.patch('mba/api/v1/theatres/:id',
         theatreController.update
     );
+
+    app.patch('mba/api/v1/theatres/:id/movies',
+        validateUpdateMoviesRequest,
+        theatreController.updateMovies
+    )
 
 
 }
