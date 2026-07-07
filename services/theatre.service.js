@@ -138,6 +138,25 @@ const updateMoviesInTheatres=async(theatreId, movieIds ,insert)=>{
     }
 }
 
+const getMoviesInATheatre=async(id)=>{
+    try{
+        const theatre=await Theatre.findById(id).populate('movies');
+        if(!theatre){
+            throw {
+                err:'No theatre found with given id',
+                code:STATUS.NOT_FOUND
+            }
+        }
+        return theatre
+    }
+    catch(error){
+         console.log(error);
+         throw error;
+    }
+
+}
+
 module.exports={
-    createTheatre,deleteTheatre,getTheatre,updateTheatre,getAllTheatres,updateMoviesInTheatres
+    createTheatre,deleteTheatre,getTheatre,updateTheatre,getAllTheatres,updateMoviesInTheatres,
+    getMoviesInATheatre
 }
