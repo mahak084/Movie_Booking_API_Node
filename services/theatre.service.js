@@ -49,6 +49,7 @@ const getTheatre=async(id)=>{
 const getAllTheatres=async(data)=>{
     try{
         let query={};
+        let pagination={};
         if(data && data.pin){
             query.pin=data.pin;
         }
@@ -61,7 +62,14 @@ const getAllTheatres=async(data)=>{
         if(data && data.movieId){
             query.movies={$all:data.movieId};
         }
-        const response=await Theatre.find(query);
+        if(data && data.limit){
+            pagination.limit=data.limit;
+        }
+        if(data && data.skip){
+            let perpage=(data.limit)?data.limit:3;
+            pagination.skip=data.skip*perpage;
+        }
+        const response=await Theatre.find(query,{},pagination);
         return response;
     }
     catch(err){
