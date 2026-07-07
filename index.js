@@ -4,6 +4,7 @@ const bodyParser=require('body-parser')
 const mongoose=require("mongoose")
 
 const MovieRoutes=require('./routes/movie.routes');
+const TheatreRoutes=require('./routes/theatre.route');
 env.config();
 
 
@@ -13,6 +14,7 @@ app.use(bodyParser.urlencoded({extended:true}));
 app.use(bodyParser.json());
 
 MovieRoutes(app);
+TheatreRoutes(app);
 
 const PORT=process.env.PORT;
 
