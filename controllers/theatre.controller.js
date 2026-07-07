@@ -18,3 +18,60 @@ const create=async(req,res)=>{
         return res.status(STATUS.INTERNAL_SERVER_ERROR).json(errorResponseBody);      
     }
 }
+
+const destroy=async(req,res)=>{
+    try{
+    const response=await theatreService.deleteTheatre(req.params.id);
+    successResponseBody.data=response;
+    successResponseBody.message="Successfully deleted the theatre";
+    return res.status(STATUS.OK).json(successResponseBody); 
+    }
+    catch(error){
+        if(error.err){
+           errorResponseBody.err=error.err;
+           return res.status(error.code).json(errorResponseBody);
+        }
+        errorResponseBody.err=error;
+        return res.status(STATUS.INTERNAL_SERVER_ERROR).josn(errorResponseBody);
+    }
+}
+
+const getTheatre=async(req,res)=>{
+    try{
+        const response=await theatreService.getTheatre(req.params.id);
+        successResponseBody.data=response;
+        return res.status(STATUS.OK).json(successResponseBody);
+    }catch(error){
+        if(error.err) {
+            errorResponseBody.err = error.err;
+            return res.status(error.code).json(errorResponseBody);
+        }
+        errorResponseBody.err = error;
+        return res.status(STATUS.INTERNAL_SERVER_ERROR).json(errorResponseBody);
+    }
+}
+
+const getTheatres=async(req,res)=>{
+    try{}
+    catch(error){
+        
+    }
+}
+
+const update = async (req, res) => {
+    try {
+        const response = await theatreService.updateTheatre(req.params.id, req.body);
+        successResponseBody.data = response;
+        successResponseBody.message = "Successfully updated the theatre";
+        return res.status(STATUS.OK).json(successResponseBody);
+    } catch (error) {
+        if(error.err) {
+            errorResponseBody.err = error.err;
+            return res.status(error.code).json(errorResponseBody);
+        }
+        errorResponseBody.err = error;
+        return res.status(STATUS.INTERNAL_SERVER_ERROR).json(errorResponseBody);
+    }
+}
+
+ module.exports={create,destroy,update,getTheatre,getAllTheatres};

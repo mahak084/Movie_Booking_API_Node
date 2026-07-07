@@ -18,11 +18,6 @@ TheatreRoutes(app);
 
 const PORT=process.env.PORT;
 
-app.get('/home',(req,res)=>{
-    return res.json({
-        sucess:true
-    })
-})
 
 app.listen(PORT,async()=>{
     console.log(`Server started on PORT ${process.env.PORT}`);
