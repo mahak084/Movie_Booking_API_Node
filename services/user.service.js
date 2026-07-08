@@ -1,8 +1,19 @@
 const User=require('../models/user.model');
-const {STATUS}=require('../utils/constants')
+const {STATUS,USER_ROLE,USER_STATUS}=require('../utils/constants')
 
 const createUser=async(data)=>{
     try{
+        if(!data.userRole || data.userRole==USER_ROLE.coustomer){
+             if(data.USER_STATUS && USER_STATUS!=USER_STATUS.approved){
+                throw {
+                    err: "We cannot set any other status for customer", 
+                    code: 400
+                };
+             }
+        }
+        if(data.userRole && data.userRole != USER_ROLE.customer) {
+            data.userStatus = USER_STATUS.pending;
+        }
         const response=await User.create(data);
         return response
     }
