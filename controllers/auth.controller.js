@@ -10,8 +10,12 @@ const signup=async(req,res)=>{
         successResponseBody.message='Successfully registered user';
         return res.status(STATUS.OK).json(successResponseBody);
     }catch(error){
+        if(error.err){
+            errorResponseBody.err=error.err;
+            return response.status(error.code).json(errorResponseBody);
+        }
         errorResponseBody.err=error;
-        return resizeBy.status(STATUS.INTERNAL_SERVER_ERROR).json(errorResponseBody);
+        return response.status(STATUS.INTERNAL_SERVER_ERROR).json(errorResponseBody);
     }
 }
 
