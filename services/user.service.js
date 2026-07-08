@@ -29,3 +29,21 @@ const createUser=async(data)=>{
         throw error;
     }
 }
+
+const getUserByEmail=async(email)=>{
+    try{
+        const response=await User.findOne({email:email});
+        if(!user){
+            throw {
+                err:'No user found for corresponding email',
+                code:STATUS.NOT_FOUND
+            }
+        }
+        return response;
+    }
+    catch(error){
+        throw error;
+    }
+}
+
+module.exports={getUserByEmail,createUser}
