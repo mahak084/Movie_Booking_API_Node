@@ -1,3 +1,4 @@
+const { response } = require('express');
 const Theatre=require('../models/theatre.model');
 const {STATUS}=require('../utils/constants')
 
@@ -140,7 +141,7 @@ const updateMoviesInTheatres=async(theatreId, movieIds ,insert)=>{
 
 const getMoviesInATheatre=async(id)=>{
     try{
-        const theatre=await Theatre.findById(id).populate('movies');
+        const theatre=await Theatre.findById(id, {name:1, movies:1}).populate('movies');
         if(!theatre){
             throw {
                 err:'No theatre found with given id',
@@ -153,10 +154,28 @@ const getMoviesInATheatre=async(id)=>{
          console.log(error);
          throw error;
     }
-
 }
+
+const checkMovieInATheatre=async(theatreId,movieId)=>{
+   try{
+      const theatre=await Theatre.findById(theatreId);
+      if(!theatre){
+        throw {
+            err:'No such theatre found for the given id',
+            code:STATUS.NOT_FOUND
+        }
+      }
+      return response.movies.indexOf(movieId)!=-1;
+   }
+   catch(error){
+      console.log(err);
+      throw err;
+   }
+}
+
+
 
 module.exports={
     createTheatre,deleteTheatre,getTheatre,updateTheatre,getAllTheatres,updateMoviesInTheatres,
-    getMoviesInATheatre
+    getMoviesInATheatre,checkMovieInATheatre
 }
