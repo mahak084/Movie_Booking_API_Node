@@ -11,4 +11,16 @@ const STATUS_CODES={
     PAYMENT_REQUIRED:401
 }
 
-module.exports={STATUS:STATUS_CODES}
+const USER_STATUS={
+    approved:"APPROVED",
+    pending:"PENDING",
+    rejected:"REJECTED"
+}
+
+const USER_ROLE={
+    customer:"CUSTOMER",
+    client:"CLIENT",
+    admin:"ADMIN"
+}
+
+module.exports={STATUS:STATUS_CODES,USER_ROLE,USER_STATUS};
