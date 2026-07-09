@@ -44,12 +44,12 @@ const isAuthenticated=async(req,res,next)=>{
     const token=req.headers["x-access-token"];
     if(!token){
         errorResponseBody.err='no token provided'
-        res.status(STATUS.FORBIDDEN).json(errorResponseBody);
+        return res.status(STATUS.FORBIDDEN).json(errorResponseBody);
     }
     const response=jwt.verify(token,process.env.AUTH_KEY);
     if(!response){
         errorResponseBody.err='Token not verify';
-        res.status(STATUS.NOT_FOUND).json(errorResponseBody);
+        return res.status(STATUS.NOT_FOUND).json(errorResponseBody);
     }
     const user=await userService.getUserById(response.id);
     req.user = user.id;
