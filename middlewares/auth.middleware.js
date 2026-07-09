@@ -71,4 +71,19 @@ const isAuthenticated=async(req,res,next)=>{
     }   
 }
 
-module.exports={validateSignupRequest,validateSigninRequest,isAuthenticated};
+const validateResetPasswordRequest=async(req,res,next)=>{
+    // validate old password presence
+    if(!req.body.oldPassword) {
+        errorResponseBody.err = 'Missing the old password in the request';
+        return res.status(STATUS.BAD_REQUEST).json(errorResponseBody);
+    }
+
+    // validate new password presence
+    if(!req.body.newPassword) {
+        errorResponseBody.err = 'Missing the new password in the request';
+        return res.status(STATUS.BAD_REQUEST).json(errorResponseBody);
+    }
+    next();
+}
+
+module.exports={validateSignupRequest,validateSigninRequest,isAuthenticated,validateResetPasswordRequest};
