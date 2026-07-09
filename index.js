@@ -5,7 +5,8 @@ const mongoose=require("mongoose")
 
 const MovieRoutes=require('./routes/movie.routes');
 const TheatreRoutes=require('./routes/theatre.route');
-const AuthRoutes=require('./routes/auth.routes')
+const AuthRoutes=require('./routes/auth.routes');
+const UserRoutes=require('./routes/user.routes');
 env.config();
 
 
@@ -17,6 +18,7 @@ app.use(bodyParser.json());
 MovieRoutes(app);
 TheatreRoutes(app);
 AuthRoutes(app);
+UserRoutes(app);
 
 
 const PORT=process.env.PORT;
