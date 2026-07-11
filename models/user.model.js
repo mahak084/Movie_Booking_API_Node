@@ -17,7 +17,7 @@ const userSchema=new mongoose.Schema({
         trim:true
     },
     password:{
-        tye:String,
+        type:String,
         required:true,
         minLength:6
     },
@@ -29,7 +29,7 @@ const userSchema=new mongoose.Schema({
         default:USER_ROLE.customer
     },
     userStatus:{
-        tye:String,
+        type:String,
         required:true,
         enum:{
             values:[USER_STATUS.pending,USER_STATUS.approved,USER_STATUS.rejected],
