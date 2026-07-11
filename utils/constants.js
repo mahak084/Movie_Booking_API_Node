@@ -23,4 +23,10 @@ const USER_ROLE={
     admin:"ADMIN"
 }
 
-module.exports={STATUS:STATUS_CODES,USER_ROLE,USER_STATUS};
+const BOOKING_STATUS={
+    cancelled:"CANCELLED",
+    successfull:"SUCCESSFULL",
+    processing:"IN_PROCESS"
+}
+
+module.exports={STATUS:STATUS_CODES,USER_ROLE,USER_STATUS,BOOKING_STATUS};
