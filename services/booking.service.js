@@ -18,4 +18,27 @@ const createBooking=async (data)=>{
 
 }
 
-module.exports={createBooking};
+const updateBooking=async(data,bookingId)=>{
+    try{
+        const response=await Booking.findByIdAndUpdate(bookingId,data,{new:true,runValidators:true});
+        if(!response){
+            throw {
+                err: "No booking found for the given id",
+                code: STATUS.NOT_FOUND
+            }
+        }
+        return response;
+    }
+    catch(error){
+        if(error.name == 'ValidationError') {
+            let err = {};
+            Object.keys(error.errors).forEach(key => {
+                err[key] = error.errors[key].message;
+            });
+            throw {err: err, code: STATUS.UNPROCESSABLE_ENTITY};
+        }
+        throw error;
+    }
+}
+
+module.exports={createBooking,updateBooking};

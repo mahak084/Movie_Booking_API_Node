@@ -10,6 +10,12 @@ const routes=(app)=>{
         bookingController.create
     );
 
+    app.patch('/mba/api/v1/booking/:id',
+        authMiddleware.isAuthenticated,
+        bookingMiddleware.canChangeStatus,
+        bookingController.update
+    );
+
 }
 
 
