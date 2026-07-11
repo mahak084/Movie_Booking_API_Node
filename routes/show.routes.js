@@ -22,6 +22,13 @@ const routes=(app)=>{
         showController.destroy
     );
 
+    app.patch(
+        '/mba/api/v1/shows/:id',
+        authMiddleware.isAuthenticated,
+        authMiddleware.isAdminOrClient,
+        showMiddleware.validateShowUpdateRequest,
+        showController.update
+    );
 
 
 }

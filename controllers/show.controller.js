@@ -51,5 +51,23 @@ const destroy = async (req, res) => {
 }
 
 
+const update = async (req, res) => {
+    try {
+        const response = await showService.updateShow(req.params.id, req.body);
+        successResponseBody.data = response;
+        successResponseBody.message = "Successfully updated the show";
+        return res.status(STATUS.OK).json(successResponseBody);
+    } catch (error) {
+        if(error.err) {
+            errorResponseBody.err = error.err;
+            return res.status(error.code).json(errorResponseBody);
+        }
+        console.log(error);
+        errorResponseBody.err = error;
+        return res.status(STATUS.INTERNAL_SERVER_ERROR).json(errorResponseBody);
+    }
+}
 
-module.exports={create,getShows,destroy};
+
+
+module.exports={create,getShows,destroy,update};
