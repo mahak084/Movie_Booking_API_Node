@@ -15,10 +15,13 @@ const routes=(app)=>{
         showController.getShows
     );
 
-    app.get(
-        '/mba/api/v1/shows',
-        showController.getShows
+    app.delete(
+        '/mba/api/v1/shows/:id',
+        authMiddleware.isAuthenticated,
+        authMiddleware.isAdminOrClient,
+        showController.destroy
     );
+
 
 
 }

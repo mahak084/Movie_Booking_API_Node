@@ -34,4 +34,22 @@ const getShows = async (req, res) => {
     }
 }
 
-module.exports={create};
+const destroy = async (req, res) => {
+    try {
+        const response = await showService.deleteShow(req.params.id);
+        successResponseBody.data = response;
+        successResponseBody.message = "Successfully deleted the show";
+        return res.status(STATUS.OK).json(successResponseBody);
+    } catch (error) {
+        if(error.err) {
+            errorResponseBody.err = error.err;
+            return res.status(error.code).json(errorResponseBody);
+        }
+        errorResponseBody.err = error;
+        return res.status(STATUS.INTERNAL_SERVER_ERROR).json(errorResponseBody);
+    }
+}
+
+
+
+module.exports={create,getShows,destroy};
