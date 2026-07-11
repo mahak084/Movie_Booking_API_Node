@@ -7,6 +7,7 @@ const MovieRoutes=require('./routes/movie.routes');
 const TheatreRoutes=require('./routes/theatre.route');
 const AuthRoutes=require('./routes/auth.routes');
 const UserRoutes=require('./routes/user.routes');
+const BookingRoutes=require('./routes/booking.routes');
 env.config();
 
 
@@ -19,6 +20,7 @@ MovieRoutes(app);
 TheatreRoutes(app);
 AuthRoutes(app);
 UserRoutes(app);
+BookingRoutes(app);
 
 
 const PORT=process.env.PORT;
