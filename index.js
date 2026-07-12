@@ -9,6 +9,7 @@ const AuthRoutes=require('./routes/auth.routes');
 const UserRoutes=require('./routes/user.routes');
 const BookingRoutes=require('./routes/booking.routes');
 const ShowRoutes=require('./routes/show.routes');
+const PaymentRoutes=require('./routes/payment.routes');
 env.config();
 
 
@@ -23,6 +24,7 @@ AuthRoutes(app);
 UserRoutes(app);
 BookingRoutes(app);
 ShowRoutes(app);
+PaymentRoutes(app);
 
 
 const PORT=process.env.PORT;

@@ -77,4 +77,4 @@ const getBookingById = async (req, res, next) => {
     }
 }
 
-module.exports={create,update,getBookings,getAllBookings}
+module.exports={create,update,getBookings,getAllBookings,getBookingById};

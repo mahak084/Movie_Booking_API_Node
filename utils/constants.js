@@ -26,7 +26,8 @@ const USER_ROLE={
 const BOOKING_STATUS={
     cancelled:"CANCELLED",
     successfull:"SUCCESSFULL",
-    processing:"IN_PROCESS"
+    processing:"IN_PROCESS",
+    expired:"EXPIRED"
 }
 
 
