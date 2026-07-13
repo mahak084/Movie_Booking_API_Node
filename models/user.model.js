@@ -24,7 +24,7 @@ const userSchema=new mongoose.Schema({
     userRole:{
         type:String,
         required:true,
-        enum:{value:[USER_ROLE.customer,USER_ROLE.client,USER_ROLE.admin],
+        enum:{values:[USER_ROLE.customer,USER_ROLE.client,USER_ROLE.admin],
             message:'Invalid user role is given'},
         default:USER_ROLE.customer
     },
